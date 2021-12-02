@@ -37,6 +37,7 @@ namespace AoC2021
 
         public static void Run()
         {
+            Console.WriteLine("--- ADVENT OF CODE DAY 1 ---");
             var readings = File.ReadAllText("day1/input.txt")
                 .Split("\r\n").Select((x, i) => new Reading
                 {
