@@ -10,7 +10,7 @@ namespace AoC2021
         private static void Part1(List<Reading> readings)
         {
             var larger = readings
-                .Count(x => x.Index > 0 && x.Value > readings[x.Index - 1].Value);
+                .Count(x => x.Index > 0 && readings[x.Index].Value > readings[x.Index - 1].Value);
 
             Console.WriteLine($"Part 1 {larger} readings are larger than the previous");
         }
@@ -26,12 +26,12 @@ namespace AoC2021
                     { 
                         readings[i], 
                         readings[i + 1],
-                        readings[i + 2] 
+                        readings[i + 2]
                     } 
                 })
                 .ToList();
 
-            var larger = slidingReadings.Where(x => x.Index > 0).Count(x => slidingReadings[x.Index].Total > slidingReadings[x.Index - 1].Total);
+            var larger = slidingReadings.Count(x => x.Index > 0 && slidingReadings[x.Index].Total > slidingReadings[x.Index - 1].Total);
             Console.WriteLine($"Part 2 {larger} readings are larger than the previous");
         }
 
