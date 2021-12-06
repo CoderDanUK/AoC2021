@@ -2,5 +2,9 @@ bin/
 obj/
 .vs/
 
+<<<<<<< HEAD
 .vscode/
 .ionide/
+=======
+golang/**/out/
+>>>>>>> d5f0a3d0503152a8fee74f1fa165a4f178c47dcc
