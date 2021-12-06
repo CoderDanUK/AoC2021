@@ -19,6 +19,11 @@ namespace AoC2021
             public int CardId;
             public List<BingoSquare> Squares;
             public int CardScore = 0;
+            public int WinningNumber = 0;
+            public int WinningRead = 0;
+
+            public string WinningText() => $"Card {CardId} won with a score of {CardScore} and the last number read was {WinningNumber}";
+
             public List<int> Numbers() => Squares.Select(x => x.Value).ToList();
         }
 
@@ -49,22 +54,33 @@ namespace AoC2021
                         Value = value
                     })).ToList()
                 })
-                .OrderBy(x => x.CardId);
+                .OrderBy(x => x.CardId)
+                .ToList();
 
             var wonCards = new List<int>();
 
             for (var i = 0; i < numbers.Count(); i++)
             {
                 var readNumbers = numbers.Take(i + 1);
-                foreach (var card in cards.Where(x => !wonCards.Contains(x.CardId)))
+                for (var j = 0; j < cards.Count(); j++)
                 {
-                    if (HasWon(card, readNumbers))
+                    if (HasWon(cards[j], readNumbers) && cards[j].WinningRead == 0)
                     {
-                        wonCards.Add(card.CardId);
-                        Console.WriteLine($"Card {card.CardId} won with a score of {GetCardScore(card, readNumbers)} and the last number read was {numbers[i]}");
+                        wonCards.Add(cards[j].CardId);
+                        cards[j].WinningRead = i;
+                        cards[j].CardScore = GetCardScore(cards[j], readNumbers);
+                        cards[j].WinningNumber = numbers[i];
                     }
                 }
             }
+
+            var ordered = cards.Where(x => x.WinningRead > 0).OrderBy(x => x.WinningRead);
+
+            var first = ordered.First();
+            var last = ordered.Last();
+
+            Console.WriteLine(first.WinningText());
+            Console.WriteLine(last.WinningText());
         }
     }
 }
